@@ -45,6 +45,8 @@ sudo ufw --force enable
 # for controlling displays
 sudo usermod -aG i2c "$USER"
 
+stow hyprland matugen mise quickshell steam terminal xdg
+
 # run after stow
 update-desktop-database ~/.local/share/applications/
 fc-cache -fv
