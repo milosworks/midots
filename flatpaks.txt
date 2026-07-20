@@ -1,0 +1,5 @@
+# Audio
+com.saivert.pwvucontrol
+
+# Games
+org.vinegarhq.Sober

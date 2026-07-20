@@ -1,0 +1,23 @@
+# Apps
+zen-browser-bin
+r-quick-share
+vesktop
+aseprite
+protonup-qt-bin
+
+# Dev
+visual-studio-code-bin
+antigravity-ide
+jetbrains-toolbox
+blockbench-bin
+
+# Hardware
+coolercontrol
+
+# Clipboard
+clipvault
+#satty
+
+# Terminal
+tabby-bin
+lavat

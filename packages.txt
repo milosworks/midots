@@ -1,0 +1,90 @@
+# Core Utilities
+curl
+wget
+unzip
+stow
+mise
+fd
+ripgrep
+ufw
+flatpak
+
+# Terminal Environment
+zsh
+zsh-autosuggestions
+zsh-syntax-highlighting
+fzf
+zoxide
+eza
+btop
+bat
+starship
+fastfetch
+tealdeer
+
+# Dev
+github-cli
+ffmpeg
+podman
+
+# Security & Authentication
+gnome-keyring
+seahorse
+hyprpolkitagent
+
+# Audio
+pipewire
+wireplumber
+pipewire-pulse
+pipewire-audio
+
+# Wayland & Desktop Environment
+hyprland
+hypridle
+hyprpicker
+xdg-desktop-portal-hyprland
+qt5-wayland
+qt6-wayland
+swaync
+qt5ct
+qt6ct
+kvantum
+dolphin
+nwg-look
+awww
+wallust
+
+# Clipboard & Screenshots
+wl-clipboard
+wl-clip-persist
+#grim
+#slurp
+
+# Fonts
+ttf-jetbrains-mono-nerd
+ttf-liberation
+ttf-dejavu
+noto-fonts-emoji
+noto-fonts
+noto-fonts-cjk
+
+# Torrent 
+qbittorrent
+
+# Media
+gimp
+vlc
+vlc-plugins-base
+vlc-plugins-extra
+moonlight-qt
+obs-studio
+libreoffice-fresh
+
+# Games
+steam
+protontricks
+winetricks
+lutris
+
+# Hardware
+openrgb

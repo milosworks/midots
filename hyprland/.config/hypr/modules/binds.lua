@@ -1,0 +1,53 @@
+local terminal = 'ghostty'
+local fileManager = 'dolphin'
+local browser = 'zen-browser'
+local editor = "codedd"
+
+local lock = "loginctl lock-session"
+local colorpicker = 'hyprpicker -a'
+
+local mainMod = "SUPER"
+
+-- App Launch
+hl.bind(mainMod .. "+ Backspace", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. "+ E", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. "+ T", hl.dsp.exec_cmd(browser))
+hl.bind(mainMod .. "+ C", hl.dsp.exec_cmd(editor))
+
+-- Mouse binds
+hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+-- Window management
+hl.bind(mainMod .. " + Q", hl.dsp.window.close())
+hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen())
+
+-- Move active window to a workspace with mainMod + SHIFT + mouse buttons
+hl.bind(mainMod .. " + SHIFT + mouse:276", hl.dsp.window.move({ workspace = "e+1" }))
+hl.bind(mainMod .. " + SHIFT + mouse:275", hl.dsp.window.move({ workspace = "e-1" }))
+
+-- Switch to specific workspace & move active window
+for i = 1, 9 do
+    hl.bind(mainMod .. " + " .. i, hl.dsp.focus({ workspace = i }))
+    hl.bind(mainMod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
+end
+
+-- Special workspace (scratchpad)
+hl.bind(mainMod .. " + 0", hl.dsp.workspace.toggle_special("magic"))
+hl.bind(mainMod .. " + SHIFT + 0", hl.dsp.window.move({ workspace = "special:magic" }))
+
+-- Clipboard
+-- hl.bind("SUPER + V", hl.dsp.exec_cmd("clipvault list | rofi -dmenu -display-columns 2 | clipvault get | wl-copy"))
+
+-- Screenshots
+-- hl.bind("Print", hl.dsp.exec_cmd("hyprshot -z -m region --clipboard-only"))
+
+-- Color picker
+hl.bind("F11", hl.dsp.exec_cmd(colorpicker))
+
+-- Lock screen
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(lock))
+
+-- Exit Hyprland
+hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exit())

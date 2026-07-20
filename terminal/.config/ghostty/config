@@ -1,0 +1,7 @@
+keybind = performable:ctrl+shift+c=copy_to_clipboard
+keybind = performable:ctrl+v=paste_from_clipboard
+
+background = #181818
+background-opacity = 0.7
+
+confirm-close-surface=false

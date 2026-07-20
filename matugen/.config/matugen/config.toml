@@ -1,0 +1,6 @@
+[config]
+prefer = "darkness"
+
+[templates.mish]
+input_path = "~/.config/matugen/templates/mish.json"
+output_path = "~/.cache/mish/colors.json"

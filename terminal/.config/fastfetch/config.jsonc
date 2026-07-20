@@ -1,0 +1,141 @@
+{
+	"$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+	"logo": {
+		"source": "~/dotfiles/ansi/kirby.ans",
+		"padding": {
+			"top": 2,
+			"left": 1,
+			"right": 2
+		}
+	},
+	"display": {
+		"separator": " ",
+		"key": {
+			"width": 16
+		},
+		"constants": [
+			"\u001b[38;2;180;185;190m", // {$1} - Gray
+			"\u001b[38;2;255;160;160m", // {$2} - Red
+			"\u001b[38;2;255;223;153m", // {$3} - Yellow
+			"\u001b[38;2;170;230;170m", // {$4} - Green
+			"\u001b[38;2;150;225;210m", // {$5} - Mint
+			"\u001b[38;2;160;200;255m", // {$6} - Blue
+			"\u001b[38;2;210;180;240m", // {$7} - Purple
+			"\u001b[38;2;40;40;40m", // {$8} - Black
+			"\u001b[0m" // {$9} - Reset color
+		]
+	},
+	"modules": [
+		{
+			"type": "custom",
+			"format": "{#white}╭────────────┬──────────────"
+		},
+		{
+			"type": "title",
+			"key": "{#white}│ {$2}  {#white}user",
+			"format": "{$2}{user-name}"
+		},
+		{
+			"type": "os",
+			"key": "{#white}│ {$3}  {#white}distro",
+			"format": "{$3}{name}"
+		},
+		{
+			"type": "kernel",
+			"key": "{#white}│ {$4}  {#white}kernel",
+			"format": "{$4}{release}"
+		},
+		{
+			"type": "uptime",
+			"key": "{#white}│ {$5}󰔠  {#white}uptime",
+			"format": "{$5}{?years}{years}y {?}{?days}{days}d {?}{?hours}{hours}h {?}{?minutes}{minutes}m {?}{/minutes}{seconds}s{/}{/seconds} {milliseconds}ms{/}"
+		},
+		{
+			"type": "shell",
+			"key": "{#white}│ {$6}  {#white}shell",
+			"format": "{$6}{process-name}"
+		},
+		{
+			"type": "wm",
+			"key": "{#white}│ {$7}  {#white}wm",
+			"format": "{$7}{pretty-name} ({version})"
+		},
+		// {
+		// 	"type": "packages",
+		// 	"key": "{#white}│ {$7}󰏗  {#white}packages",
+		// 	"format": "{$7}{all}"
+		// },
+		{
+			"type": "custom",
+			"format": "{#white}╰────────────┴──────────────"
+		},
+
+		{
+			"type": "custom",
+			"format": "{#white}╭────────────┬──────────────"
+		},
+		{
+			"type": "cpu",
+			"key": "{#white}│  {$2}󰻠 {#white}cpu",
+			"format": "{$2}{name} @{freq-max}"
+		},
+		{
+			"type": "gpu",
+			"key": "{#white}│  {$3}󰢮 {#white}gpu",
+			"format": "{$3}{name}",
+			"hideType": "integrated",
+			"percent": {
+				"type": 3
+			}
+		},
+		{
+			"type": "memory",
+			"key": "{#white}│  {$4} {#white}memory",
+			"format": "{$4}{used} {percentage-bar} {$4}({percentage})",
+			"percent": {
+				"type": 3
+			}
+		},
+		{
+			"type": "disk",
+			"key": "{#white}│  {$5}󰋊 {#white}/ ",
+			"format": "{$5}{size-used}/{size-total} {size-percentage-bar} {$5}({size-percentage})",
+			"folders": "/",
+			"percent": {
+				"type": 3
+			}
+		},
+		{
+			"type": "disk",
+			"key": "{#white}│  {$6}󰋊 {#white}/windows ",
+			"format": "{$6}{size-used}/{size-total} {size-percentage-bar} {$6}({size-percentage})",
+			"folders": "/windows",
+			"percent": {
+				"type": 3
+			}
+		},
+		{
+			"type": "display",
+			"key": "{#white}│  {$7}󰍹 {#white}display",
+			"format": "{$7}{width}x{height}@{refresh-rate}{?hdr-enabled}HDR{?}, {inch}\""
+		},
+		{
+			"type": "custom",
+			"format": "{#white}╰────────────┴──────────────"
+		},
+
+		{
+			"type": "custom",
+			"format": "{#white}╭───────────────────────────"
+		},
+		{
+			"type": "custom",
+			"key": "{#white}│  {$1}󱥚  {#white}colors",
+			"format": "{$1}● {$2}● {$3}● {$4}● {$5}● {$6}● {$7}● {$8}● {$9}"
+		},
+		{
+			"type": "custom",
+			"format": "{#white}╰───────────────────────────"
+		}
+	]
+}

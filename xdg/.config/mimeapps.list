@@ -1,0 +1,39 @@
+[Default Applications]
+text/plain=code.desktop
+application/json=code.desktop
+application/x-shellscript=code.desktop
+text/markdown=code.desktop
+text/csv=code.desktop
+application/x-desktop=code.desktop;
+
+# Dev
+text/html=code.desktop
+text/css=code.desktop
+text/javascript=code.desktop
+application/javascript=code.desktop
+text/x-typescript=code.desktop
+application/typescript=code.desktop
+text/x-csrc=code.desktop
+text/x-c++src=code.desktop
+text/rust=code.desktop
+text/x-rust=code.desktop
+text/x-go=code.desktop
+
+# Directories
+inode/directory=org.kde.dolphin.desktop
+application/zip=dolphin.desktop
+application/vnd.rar=dolphin.desktop
+
+# Web
+application/x-bittorrent=qbittorrent.desktop
+x-scheme-handler/chrome=zen.desktop
+x-scheme-handler/http=zen.desktop
+x-scheme-handler/https=zen.desktop
+application/x-extension-htm=zen.desktop
+application/x-extension-html=zen.desktop
+application/x-extension-shtml=zen.desktop
+application/x-extension-xht=zen.desktop
+application/x-extension-xhtml=zen.desktop
+application/xhtml+xml=zen.desktop
+x-scheme-handler/discord=vesktop.desktop
+x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
