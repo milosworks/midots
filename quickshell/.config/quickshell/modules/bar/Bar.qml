@@ -22,22 +22,23 @@ PanelWindow {
 
     color: "transparent"
 
-    readonly property int targetLeftWidth: Math.max(
+    readonly property real targetLeftWidth: Math.max(
         Theme.leftNotchMinWidth, 
         Math.min(
             Theme.leftNotchMaxWidth,
-            leftContent.implicitWidth + Theme.notchPadding * 2
+            leftContent.implicitWidth + Theme.notchBottomRadius + Theme.notchSideRadius
         )
     )
 
-    readonly property int targetRightWidth: Math.max(
+    readonly property real targetRightWidth: Math.max(
         Theme.rightNotchMinWidth,
         Math.min(
             Theme.rightNotchMaxWidth,
-            rightContent.implicitWidth + Theme.notchPadding * 2
+            rightContent.implicitWidth + Theme.notchBottomRadius + Theme.notchSideRadius
         )
     )
-    
+
+
     readonly property int targetCenterWidth: 200 
 
     property bool isRevealed: !ShellState.isLocked
@@ -57,23 +58,25 @@ PanelWindow {
         }
     }
 
+
+
     SequentialAnimation {
         id: revealAnim
         
         PauseAnimation { duration: 200 }
         
-        NumberAnimation { target: root; property: "sideProgress"; to: 1.0; duration: 500; easing.type: Easing.OutExpo }
+        NumberAnimation { target: root; property: "sideProgress"; to: 1.0; duration: Theme.animDurationNormal; easing.type: Easing.OutExpo }
         
         PauseAnimation { duration: 100 }
         
-        // NumberAnimation { target: root; property: "centerProgress"; to: 1.0; duration: 500; easing.type: Easing.OutExpo }
+        // NumberAnimation { target: root; property: "centerProgress"; to: 1.0; duration: Theme.animDurationNormal; easing.type: Easing.OutExpo }
     }
 
     SequentialAnimation {
         id: hideAnim
         ParallelAnimation {
-            NumberAnimation { target: root; property: "sideProgress"; to: 0.0; duration: 500; easing.type: Easing.OutExpo }
-            // NumberAnimation { target: root; property: "centerProgress"; to: 0.0; duration: 500; easing.type: Easing.OutExpo }
+            NumberAnimation { target: root; property: "sideProgress"; to: 0.0; duration: Theme.animDurationNormal; easing.type: Easing.OutExpo }
+            // NumberAnimation { target: root; property: "centerProgress"; to: 0.0; duration: Theme.animDurationNormal; easing.type: Easing.OutExpo }
         }
     }
 
@@ -110,8 +113,12 @@ PanelWindow {
 
             LeftContent {
                 id: leftContent
-                anchors.centerIn: parent
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.notchSideRadius
+                anchors.verticalCenter: parent.verticalCenter
                 screen: root.screen
+
+                
             }
         }
     }
@@ -152,7 +159,9 @@ PanelWindow {
 
             RightContent {
                 id: rightContent
-                anchors.centerIn: parent
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.notchSideRadius
+                anchors.verticalCenter: parent.verticalCenter
                 screen: root.screen
                 panel: root
             }

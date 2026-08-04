@@ -3,17 +3,25 @@ import QtQuick
 import Quickshell
 
 Singleton {
+    id: root
+
     property ShellScreen targetScreen: null
 
-    property bool powerMenuActive: false
+    property string activeOverlay: ""
+    property string activeSide: "top"
 
-    function togglePowerMenu(screen) {
-        if (!screen || (powerMenuActive && targetScreen === screen)) {
-            powerMenuActive = false
-            targetScreen = null
-        } else {
-            powerMenuActive = true
-            targetScreen = screen
+    function toggleOverlay(id: string, side: string, screen) {
+        if (activeOverlay === id && targetScreen === screen) {
+            closeAll()
+            return
         }
+
+        activeOverlay = id
+        activeSide = side
+        targetScreen = screen
+    }
+
+    function closeAll() {
+        activeOverlay = ""
     }
 }

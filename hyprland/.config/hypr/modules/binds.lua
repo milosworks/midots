@@ -38,10 +38,25 @@ hl.bind(mainMod .. " + 0", hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + 0", hl.dsp.window.move({ workspace = "special:magic" }))
 
 -- Clipboard
--- hl.bind("SUPER + V", hl.dsp.exec_cmd("clipvault list | rofi -dmenu -display-columns 2 | clipvault get | wl-copy"))
+hl.bind(
+    mainMod .. " + V",
+    hl.dsp.exec_cmd([[qs ipc call mish:clipboard open "$(hyprctl activeworkspace -j | jq -r '.monitor')"]])
+)
+
+-- App Launcher
+hl.bind(
+    "SUPER_L",
+    hl.dsp.exec_cmd([[qs ipc call mish:apprunner open "$(hyprctl activeworkspace -j | jq -r '.monitor')"]])
+)
 
 -- Screenshots
 -- hl.bind("Print", hl.dsp.exec_cmd("hyprshot -z -m region --clipboard-only"))
+
+-- Wallpaper Selector
+hl.bind(
+    mainMod .. " + M",
+    hl.dsp.exec_cmd([[qs ipc call mish:wallpaper open "$(hyprctl activeworkspace -j | jq -r '.monitor')"]])
+)
 
 -- Color picker
 hl.bind("F11", hl.dsp.exec_cmd(colorpicker))

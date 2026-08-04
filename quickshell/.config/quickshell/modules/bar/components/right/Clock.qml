@@ -20,12 +20,15 @@ Item {
         }
     }
 
+    property var currentDate: new Date()
+    property string timeFormat: root.hovered ? "h:mm ap ddd, dd/MMM/yy " : "h:mm ap"
+
     Text {
         anchors.verticalCenter: parent.verticalCenter
 
         id: clock
 
-        text: Qt.formatDateTime(new Date(), "h:mm ap")
+        text: Qt.formatDateTime(root.currentDate, root.timeFormat)
 
         font.family: "Inter"
         font.pixelSize: 14
@@ -37,26 +40,14 @@ Item {
         interval: 1000
         running: true
         repeat: true
-        onTriggered: root.updateClock()
+        onTriggered: root.currentDate = new Date()
     }
 
     MouseArea {
         anchors.fill: parent
         hoverEnabled: true
 
-        onEntered: {
-            root.hovered = true
-            root.updateClock()
-        }
-        onExited: {
-            root.hovered = false
-            root.updateClock()
-        }
-    }
-
-    function updateClock() {
-        clock.text = root.hovered ? 
-            Qt.formatDateTime(new Date(), "h:mm ap ddd, dd/MMM/yy ") : 
-            clock.text = Qt.formatDateTime(new Date(), "h:mm ap")
+        onEntered: root.hovered = true
+        onExited: root.hovered = false
     }
 }

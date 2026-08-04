@@ -21,3 +21,7 @@ clipvault
 # Terminal
 tabby-bin
 lavat
+
+# nautilus
+nautilus-admin-gtk4
+nautilus-launch

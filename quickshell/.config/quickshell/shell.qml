@@ -4,9 +4,9 @@
 import QtQuick
 import Quickshell
 import qs.modules.bar
-import qs.modules.overlays
 import qs.modules.lock
 import qs.state
+import qs.components
 
 Scope {
     IpcEndpoints {}
@@ -25,5 +25,5 @@ Scope {
         }
     }
  
-    PowerMenu {}
+    OverlayManager {}
 }

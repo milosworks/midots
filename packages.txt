@@ -45,14 +45,16 @@ hyprpicker
 xdg-desktop-portal-hyprland
 qt5-wayland
 qt6-wayland
+qt6-svg
 swaync
 qt5ct
 qt6ct
 kvantum
-dolphin
+nautilus
 nwg-look
 awww
 wallust
+sushi
 
 # Clipboard & Screenshots
 wl-clipboard
@@ -85,6 +87,7 @@ steam
 protontricks
 winetricks
 lutris
+prismlauncher
 
 # Hardware
 openrgb

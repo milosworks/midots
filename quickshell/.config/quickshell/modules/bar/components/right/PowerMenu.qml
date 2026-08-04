@@ -16,6 +16,6 @@ MaterialIcon {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
 
-        onClicked: Overlays.togglePowerMenu(parent.screen)
-    }             
+        onClicked: Overlays.toggleOverlay("powermenu", "right", parent.screen)
+    }
 }

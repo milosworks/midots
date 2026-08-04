@@ -1,97 +1,139 @@
 import QtQuick
+import QtQuick.Shapes
 import qs.theme
 
-Canvas {
+Item {
     id: root
-
     anchors.fill: parent
-
     property int leftWidth: Theme.leftNotchMinWidth
     property int centerWidth: Theme.centerNotchMinWidth
     property int rightWidth: Theme.rightNotchMinWidth
 
-    // NEW: Independent heights for the waterfall melt!
     property int leftHeight: Theme.notchHeight
     property int centerHeight: Theme.notchHeight
     property int rightHeight: Theme.notchHeight
-
     property int bottomRadius: Theme.notchBottomRadius
     property int topRadius: Theme.notchTopRadius
     property int sideRadius: Theme.notchSideRadius 
     property color color: Theme.surface
 
-    onWidthChanged:       requestPaint()
-    onHeightChanged:      requestPaint()
-    onLeftWidthChanged:   requestPaint()
-    onCenterWidthChanged: requestPaint()
-    onRightWidthChanged:  requestPaint()
-    onLeftHeightChanged:  requestPaint()
-    onCenterHeightChanged:requestPaint()
-    onRightHeightChanged: requestPaint()
-    onColorChanged:       requestPaint()
-    onBottomRadiusChanged:requestPaint()
-    onTopRadiusChanged:   requestPaint()
-    onSideRadiusChanged:  requestPaint()
+    Shape {
+        id: leftNotch
+        visible: root.leftWidth > 1 && root.leftHeight > 1
+        anchors.left: parent.left
+        anchors.top: parent.top
+        width: root.leftWidth + root.topRadius
+        height: root.leftHeight + root.sideRadius
 
-    onPaint: {
-        const ctx = getContext("2d")
-        ctx.reset()
+        ShapePath {
+            fillColor: root.color
+            strokeColor: "transparent"
+            strokeWidth: 0
 
-        const leftW   = root.leftWidth
-        const centerW = root.centerWidth
-        const rightW  = root.rightWidth
+            startX: 0
+            startY: 0
 
-        const leftH   = root.leftHeight
-        const centerH = root.centerHeight
-        const rightH  = root.rightHeight
-
-        const rBottom = root.bottomRadius
-        const rTop    = root.topRadius
-        const rSide   = root.sideRadius
-        const w       = width
-
-        const centerStart = (w / 2) - (centerW / 2)
-        const centerEnd   = (w / 2) + (centerW / 2)
-        const rightStart  = w - rightW
-
-        ctx.beginPath()
-        ctx.fillStyle = root.color
-        ctx.moveTo(0, 0)
-
-        if (leftW > 1 && leftH > 1) {
-            ctx.lineTo(0, leftH + rSide)
-            ctx.quadraticCurveTo(0, leftH, rSide, leftH)
-            ctx.lineTo(leftW - rBottom, leftH)
-            ctx.arcTo(leftW, leftH, leftW, leftH - rBottom, rBottom)
-            ctx.lineTo(leftW, rTop)
-            ctx.arcTo(leftW, 0, leftW + rTop, 0, rTop)
+            PathLine { x: 0; y: root.leftHeight + root.sideRadius }
+            PathQuad { x: root.sideRadius; y: root.leftHeight; controlX: 0; controlY: root.leftHeight }
+            PathLine { x: root.leftWidth - root.bottomRadius; y: root.leftHeight }
+            PathArc { 
+                x: root.leftWidth; y: root.leftHeight - root.bottomRadius
+                radiusX: root.bottomRadius; radiusY: root.bottomRadius
+                useLargeArc: false
+                direction: PathArc.Counterclockwise
+            }
+            PathLine { x: root.leftWidth; y: root.topRadius }
+            PathArc {
+                x: root.leftWidth + root.topRadius; y: 0
+                radiusX: root.topRadius; radiusY: root.topRadius
+                useLargeArc: false
+                direction: PathArc.Clockwise
+            }
+            PathLine { x: 0; y: 0 }
         }
+    }
 
-        if (centerW > 1 && centerH > 1) {
-            ctx.lineTo(centerStart - rTop, 0)
-            ctx.arcTo(centerStart, 0, centerStart, rTop, rTop)
-            ctx.lineTo(centerStart, centerH - rBottom)
-            ctx.arcTo(centerStart, centerH, centerStart + rBottom, centerH, rBottom)
-            ctx.lineTo(centerEnd - rBottom, centerH)
-            ctx.arcTo(centerEnd, centerH, centerEnd, centerH - rBottom, rBottom)
-            ctx.lineTo(centerEnd, rTop)
-            ctx.arcTo(centerEnd, 0, centerEnd + rTop, 0, rTop)
+    Shape {
+        id: centerNotch
+        visible: root.centerWidth > 1 && root.centerHeight > 1
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        width: root.centerWidth + root.topRadius * 2
+        height: root.centerHeight
+
+        ShapePath {
+            fillColor: root.color
+            strokeColor: "transparent"
+            strokeWidth: 0
+            startX: 0
+            startY: 0
+            
+            PathArc {
+                x: root.topRadius; y: root.topRadius
+                radiusX: root.topRadius; radiusY: root.topRadius
+                useLargeArc: false
+                direction: PathArc.Clockwise
+            }
+            PathLine { x: root.topRadius; y: root.centerHeight - root.bottomRadius }
+            PathArc {
+                x: root.topRadius + root.bottomRadius; y: root.centerHeight
+                radiusX: root.bottomRadius; radiusY: root.bottomRadius
+                useLargeArc: false
+                direction: PathArc.Counterclockwise
+            }
+            PathLine { x: root.topRadius + root.centerWidth - root.bottomRadius; y: root.centerHeight }
+            PathArc {
+                x: root.topRadius + root.centerWidth; y: root.centerHeight - root.bottomRadius
+                radiusX: root.bottomRadius; radiusY: root.bottomRadius
+                useLargeArc: false
+                direction: PathArc.Counterclockwise
+            }
+            PathLine { x: root.topRadius + root.centerWidth; y: root.topRadius }
+            PathArc {
+                x: root.topRadius * 2 + root.centerWidth; y: 0
+                radiusX: root.topRadius; radiusY: root.topRadius
+                useLargeArc: false
+                direction: PathArc.Clockwise
+            }
+            PathLine { x: 0; y: 0 }
         }
+    }
 
-        ctx.lineTo(rightStart - rTop, 0)
-        
-        if (rightW > 1 && rightH > 1) {
-            ctx.arcTo(rightStart, 0, rightStart, rTop, rTop)
-            ctx.lineTo(rightStart, rightH - rBottom)
-            ctx.arcTo(rightStart, rightH, rightStart + rBottom, rightH, rBottom)
-            ctx.lineTo(w - rSide, rightH)
-            ctx.quadraticCurveTo(w, rightH, w, rightH + rSide)
-            ctx.lineTo(w, 0)
-        } else {
-            ctx.lineTo(w, 0)
+    Shape {
+        id: rightNotch
+        visible: root.rightWidth > 1 && root.rightHeight > 1
+        anchors.right: parent.right
+        anchors.top: parent.top
+        width: root.rightWidth + root.topRadius
+        height: root.rightHeight + root.sideRadius
+
+        ShapePath {
+            fillColor: root.color
+            strokeColor: "transparent"
+            strokeWidth: 0
+            startX: 0 
+            startY: 0
+            
+            PathArc {
+                x: root.topRadius; y: root.topRadius
+                radiusX: root.topRadius; radiusY: root.topRadius
+                useLargeArc: false
+                direction: PathArc.Clockwise
+            }
+            PathLine { x: root.topRadius; y: root.rightHeight - root.bottomRadius }
+            PathArc {
+                x: root.topRadius + root.bottomRadius; y: root.rightHeight
+                radiusX: root.bottomRadius; radiusY: root.bottomRadius
+                useLargeArc: false
+                direction: PathArc.Counterclockwise
+            }
+            PathLine { x: root.topRadius + root.rightWidth - root.sideRadius; y: root.rightHeight }
+            PathQuad {
+                x: root.topRadius + root.rightWidth; y: root.rightHeight + root.sideRadius
+                controlX: root.topRadius + root.rightWidth; controlY: root.rightHeight
+            }
+            PathLine { x: root.topRadius + root.rightWidth; y: 0 }
+            PathLine { x: 0; y: 0 }
         }
-
-        ctx.lineTo(0, 0)
-        ctx.fill()
     }
 }

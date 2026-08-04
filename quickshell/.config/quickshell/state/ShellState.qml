@@ -20,16 +20,13 @@ Singleton {
         isInitialLock = false
     }
 
-    property string backgroundPath: "/home/milo/wallhaven-4d7e5g.png"
+    FileView {
+        id: wallpaperReader
+        path: Quickshell.env("HOME") + "/.local/state/mish/wallpaper.txt"
+        watchChanges: true
+        printErrors: false
+        onFileChanged: reload()
+    }
 
-    // Process {
-    //     id: awwwQuery
-    //     // running: true
-
-    //     command: ["sh", "-c", "awww query | head -1 | awk -F 'image: ' '{print $2}'"]
-    
-    //     stdout: StdioCollector {
-    //         onStreamFinished: root.backgroundPath = "file://" + this.text.trim()
-    //     }
-    // } 
+    property string wallpaperPath: wallpaperReader.text().trim()
 }

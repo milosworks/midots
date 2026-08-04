@@ -37,7 +37,7 @@ Row {
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
-                onClicked: Hyprland.dispatch(`hl.dsp.focus({workspace=${parent.modelData.id}})`)
+                onClicked: parent.modelData.activate()
             }
         }
     }

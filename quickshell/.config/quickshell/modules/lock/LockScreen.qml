@@ -14,7 +14,7 @@ Rectangle {
 
     Image {
         id: bg
-        source: ShellState.backgroundPath
+        source: ShellState.wallpaperPath
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
     }
@@ -122,15 +122,18 @@ Rectangle {
 
             radius: 24 
             color: Theme.surfaceVariant
+
+            opacity: pam.active ? 0.5 : 1.0
+            Behavior on opacity { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
             
             Text {
                 anchors.centerIn: parent
-                text: "Password"
+                text: pam.active ? "Verifying..." : "Password"
                 font.family: "Inter"
                 font.pixelSize: 20
                 color: Theme.textPrimary
                 opacity: 0.4
-                visible: passwordInput.text === ""
+                visible: passwordInput.text === "" || pam.active
             }
 
             Item {
@@ -139,6 +142,7 @@ Rectangle {
                 anchors.leftMargin: parent.radius 
                 anchors.rightMargin: parent.radius
                 clip: true
+                visible: !pam.active
 
                 Row {
                     anchors.centerIn: parent
@@ -179,6 +183,7 @@ Rectangle {
                 color: "transparent"
                 selectionColor: "transparent"
                 cursorVisible: false 
+                readOnly: pam.active
                 
                 focus: root.isMainMonitor 
                 

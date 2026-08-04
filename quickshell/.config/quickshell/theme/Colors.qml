@@ -1,3 +1,4 @@
+// qmllint disable unresolved-type
 pragma Singleton
 import QtQuick
 import Quickshell
