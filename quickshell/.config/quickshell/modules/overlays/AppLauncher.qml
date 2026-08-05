@@ -1,7 +1,6 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Effects
 import Quickshell
 import qs.state
 import qs.components
@@ -76,7 +75,7 @@ FocusScope {
         if (view.currentIndex >= 0 && view.currentIndex < filteredApps.length) {
             let app = filteredApps[view.currentIndex]
             app.execute()
-            Overlays.toggleOverlay("apprunner", "right", Overlays.targetScreen)
+            Overlays.toggleOverlay("applauncher", "right", Overlays.targetScreen)
             searchText = ""
             searchInput.text = ""
         }
@@ -129,7 +128,7 @@ FocusScope {
                         Keys.onReturnPressed: root.launchCurrent()
                         Keys.onEnterPressed: root.launchCurrent()
                         Keys.onEscapePressed: {
-                            Overlays.toggleOverlay("apprunner", "right", Overlays.targetScreen)
+                            Overlays.toggleOverlay("applauncher", "right", Overlays.targetScreen)
                             root.searchText = ""
                             searchInput.text = ""
                         }

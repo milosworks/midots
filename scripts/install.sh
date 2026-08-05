@@ -32,13 +32,9 @@ grep -E -v '^\s*#|^\s*$' "$PKG_FILE" | sudo pacman -S --needed --noconfirm -
 
 echo "==> Installing yay..."
 if ! command -v yay &>/dev/null; then
-    cd /tmp
-    git clone https://aur.archlinux.org/yay-bin.git
-    cd yay-bin
-    makepkg -si --noconfirm
-    cd - >/dev/null
+    git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
+    (cd /tmp/yay-bin && makepkg -si --noconfirm)
     rm -rf /tmp/yay-bin
-    cd ~
     echo "==> yay installed successfully!"
 else
     echo "==> yay is already installed, skipping..."

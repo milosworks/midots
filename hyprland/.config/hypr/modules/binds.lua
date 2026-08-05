@@ -1,18 +1,34 @@
 local terminal = 'ghostty'
 local fileManager = 'dolphin'
 local browser = 'zen-browser'
-local editor = "codedd"
+local editor = "code"
 
-local lock = "loginctl lock-session"
 local colorpicker = 'hyprpicker -a'
 
 local mainMod = "SUPER"
+
+-- MiSh
+hl.bind(mainMod .. " + V", hl.dsp.global("quickshell:clipboard"))
+hl.bind(mainMod .. " + SUPER_L", hl.dsp.global("quickshell:applauncher"))
+hl.bind(mainMod .. " + M", hl.dsp.global("quickshell:wallpaper"))
 
 -- App Launch
 hl.bind(mainMod .. "+ Backspace", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. "+ E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. "+ T", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. "+ C", hl.dsp.exec_cmd(editor))
+
+-- Screenshots
+hl.bind("Print", hl.dsp.exec_cmd("hyprshot -z -m region --clipboard-only"))
+
+-- Lock screen
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
+
+-- Color picker
+hl.bind("F11", hl.dsp.exec_cmd(colorpicker))
+
+-- Exit Hyprland via UWSM
+hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd("uwsm stop"))
 
 -- Mouse binds
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
@@ -36,33 +52,3 @@ end
 -- Special workspace (scratchpad)
 hl.bind(mainMod .. " + 0", hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + 0", hl.dsp.window.move({ workspace = "special:magic" }))
-
--- Clipboard
-hl.bind(
-    mainMod .. " + V",
-    hl.dsp.exec_cmd([[qs ipc call mish:clipboard open "$(hyprctl activeworkspace -j | jq -r '.monitor')"]])
-)
-
--- App Launcher
-hl.bind(
-    "SUPER_L",
-    hl.dsp.exec_cmd([[qs ipc call mish:apprunner open "$(hyprctl activeworkspace -j | jq -r '.monitor')"]])
-)
-
--- Screenshots
--- hl.bind("Print", hl.dsp.exec_cmd("hyprshot -z -m region --clipboard-only"))
-
--- Wallpaper Selector
-hl.bind(
-    mainMod .. " + M",
-    hl.dsp.exec_cmd([[qs ipc call mish:wallpaper open "$(hyprctl activeworkspace -j | jq -r '.monitor')"]])
-)
-
--- Color picker
-hl.bind("F11", hl.dsp.exec_cmd(colorpicker))
-
--- Lock screen
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(lock))
-
--- Exit Hyprland
-hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exit())

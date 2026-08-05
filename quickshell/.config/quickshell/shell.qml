@@ -9,7 +9,7 @@ import qs.state
 import qs.components
 
 Scope {
-    IpcEndpoints {}
+    Shortcuts {}
 
     SessionLock {}
     

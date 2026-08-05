@@ -12,11 +12,9 @@ Run the scripts in the `/scripts` folder
 
 ## Arch Install Guide
 
+**Note: This guide primarily focuses on Secure Boot and our specific Dotfiles/TTY setup. For the general installation, please refer to the [Arch Wiki Installation Guide](https://wiki.archlinux.org/title/Installation_guide).**
+
 **Warning: If you are using secure-boot (which you should) your motherboard must be on setup mode**
-
-After you have partitioned your system and are in the pacstrap stage, add these packages and change the system specific packages to your liking, _do not forget to add `intel-ucode` or `amd-ucode`_
-
-`pacstrap -K /mnt base linux-zen linux-zen-headers linux-firmware base-devel git sudo nano NetworkManager systemd-boot sbctl`
 
 ### Secure boot
 
@@ -40,8 +38,7 @@ ExecStart=
 ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin milo %I $TERM
 ```
 
-The [.zprofile](/terminal/.config/.zprofile) the dotfiles include starts hyprland automatically on login and then hyprland locks the pc via our lock screen
-
+The [.zprofile](/terminal/.config/.zprofile) included in these dotfiles starts Hyprland automatically on login using [UWSM (Universal Wayland Session Manager)](https://wiki.archlinux.org/title/Universal_Wayland_Session_Manager).
 ### Github setup
 
 Generate a new ssh key with `ssh-keygen -t ed25519` and run `gh auth login`, then add the key to your github account

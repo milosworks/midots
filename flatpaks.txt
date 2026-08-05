@@ -1,5 +1,8 @@
 # Audio
 com.saivert.pwvucontrol
 
+# System
+com.github.tchx84.Flatseal
+
 # Games
 org.vinegarhq.Sober

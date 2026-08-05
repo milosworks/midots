@@ -3,11 +3,13 @@ curl
 wget
 unzip
 stow
-mise
 fd
 ripgrep
 ufw
 flatpak
+man-db
+man-pages
+dbus-broker
 
 # Terminal Environment
 zsh
@@ -22,9 +24,9 @@ starship
 fastfetch
 tealdeer
 
-# Dev
+# Development & IT
+mise
 github-cli
-ffmpeg
 podman
 
 # Security & Authentication
@@ -32,33 +34,41 @@ gnome-keyring
 seahorse
 hyprpolkitagent
 
-# Audio
+# Audio & Hardware
 pipewire
 wireplumber
 pipewire-pulse
 pipewire-audio
+pipewire-alsa
+pipewire-jack
+openrgb
 
 # Wayland & Desktop Environment
 hyprland
+uwsm
 hypridle
 hyprpicker
 xdg-desktop-portal-hyprland
+xdg-desktop-portal-gtk
 qt5-wayland
 qt6-wayland
 qt6-svg
-swaync
 qt5ct
 qt6ct
 kvantum
-nautilus
 nwg-look
 awww
 wallust
+swaync
+
+# File Management
+nautilus
 sushi
 
 # Clipboard & Screenshots
 wl-clipboard
 wl-clip-persist
+hyprshot
 #grim
 #slurp
 
@@ -70,24 +80,20 @@ noto-fonts-emoji
 noto-fonts
 noto-fonts-cjk
 
-# Torrent 
+# Media & Internet
 qbittorrent
-
-# Media
 gimp
 vlc
 vlc-plugins-base
 vlc-plugins-extra
-moonlight-qt
+ffmpeg
 obs-studio
 libreoffice-fresh
 
-# Games
+# Games & Game Streaming
 steam
 protontricks
 winetricks
 lutris
 prismlauncher
-
-# Hardware
-openrgb
+moonlight-qt

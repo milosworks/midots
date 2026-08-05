@@ -20,6 +20,8 @@ FocusScope {
 
     property var allFiles: []
 
+    property int safeCount: 0
+
     ListModel { id: wallpaperModel }
 
     Process {
@@ -43,7 +45,7 @@ FocusScope {
         id: previewTimer
         interval: 150
         property string targetPath: ""
-        
+
         onTriggered: {
             if (targetPath) {
                 Quickshell.execDetached(["sh", "-c", `awww img "${targetPath}" --transition-type wave --transition-angle 45 --transition-duration 0.5 --resize fit --transition-fps 60 && matugen image "${targetPath}"`])
@@ -80,7 +82,7 @@ FocusScope {
         let cmd = `awww img "${path}" --transition-type wave --transition-angle 45 --transition-duration 1.5 --resize fit --transition-fps 60`
         cmd += ` && matugen image "${path}"`
         cmd += ` && mkdir -p ~/.local/state/mish && echo "${path}" > ~/.local/state/mish/wallpaper.txt`
-        
+
         ShellState.wallpaperPath = path
         Quickshell.execDetached(["sh", "-c", cmd])
         root.isSaved = true
@@ -114,7 +116,7 @@ FocusScope {
         if (!root.isActive) return;
         let text = (query || "").toLowerCase()
         wallpaperModel.clear()
-        
+
         let targetIndex = 0
         let currentIndex = 0
         let newItems = []
@@ -129,16 +131,17 @@ FocusScope {
                 currentIndex++
             }
         }
-        
+
         if (newItems.length > 0) {
             wallpaperModel.append(newItems)
         }
-        
-        carousel.leftMargin = Math.max(0, (carousel.width - (450 + (wallpaperModel.count - 1) * carousel.itemStride)) / 2)
-        
-        if (wallpaperModel.count > 0) {
-            carousel.currentIndex = targetIndex
-        }
+
+        Qt.callLater(function() {
+            root.safeCount = wallpaperModel.count
+            if (wallpaperModel.count > 0) {
+                carousel.currentIndex = targetIndex
+            }
+        })
     }
 
     MouseArea {
@@ -193,9 +196,9 @@ FocusScope {
                     focus: true
                     clip: true
                     font.family: "Inter"
-                    
+
                     onTextChanged: searchDebounce.restart()
-                    
+
                     Keys.onLeftPressed: carousel.decrementCurrentIndex()
                     Keys.onRightPressed: carousel.incrementCurrentIndex()
                     Keys.onReturnPressed: root.saveCurrentWallpaper()
@@ -209,34 +212,35 @@ FocusScope {
             width: parent.width - 60
             height: parent.height - 80 - parent.spacing - 30
             clip: true
-            
+
             Text {
                 anchors.centerIn: parent
                 text: "No wallpapers :("
                 color: Theme.textMuted
                 font.pointSize: 16
-                visible: wallpaperModel.count === 0
+                visible: root.safeCount === 0
             }
 
             ListView {
                 id: carousel
-                anchors.fill: parent
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+
                 orientation: ListView.Horizontal
                 spacing: -190
-                
+
                 property int itemStride: 450 + spacing
-                
+
                 model: wallpaperModel
-                visible: wallpaperModel.count > 0
-                
+                visible: root.safeCount > 0
+
+                width: Math.min(parent.width, root.safeCount > 0 ? 450 + (root.safeCount - 1) * itemStride : 0)
+
                 preferredHighlightBegin: width / 2 - 225
                 preferredHighlightEnd: width / 2 - 225
                 highlightRangeMode: ListView.StrictlyEnforceRange
                 highlightMoveDuration: 200
-                
-                onWidthChanged: {
-                    leftMargin = Math.max(0, (width - (450 + (wallpaperModel.count - 1) * itemStride)) / 2)
-                }
 
                 delegate: Item {
                     id: itemDelegate
@@ -257,12 +261,12 @@ FocusScope {
                         Behavior on x { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
                     }
 
-                    width: 450 
+                    width: 450
                     height: 300
                     scale: distance === 0 ? 1.0 : (distance === 1 ? 0.65 : (distance === 2 ? 0.45 : 0.35))
                     opacity: distance === 0 ? 1.0 : (distance === 1 ? 0.7 : (distance === 2 ? 0.4 : 0.2))
                     z: 100 - distance
-                    
+
                     Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
                     Behavior on opacity { NumberAnimation { duration: 200 } }
 
@@ -276,10 +280,10 @@ FocusScope {
 
                         ClippingRectangle {
                             anchors.fill: parent
-                            anchors.margins: parent.border.width 
+                            anchors.margins: parent.border.width
                             color: "transparent"
                             radius: Math.max(0, imageBorder.radius - imageBorder.border.width)
-                            
+
                             Image {
                                 anchors.fill: parent
                                 source: "file://" + itemDelegate.path
@@ -294,12 +298,12 @@ FocusScope {
                         anchors.topMargin: 10
                         anchors.horizontalCenter: parent.horizontalCenter
                         width: parent.width - 20
-                        
+
                         horizontalAlignment: Text.AlignHCenter
                         elide: Text.ElideRight
-                        
+
                         text: itemDelegate.path.split('/').pop().replace(/\.[^/.]+$/, "")
-                        
+
                         color: itemDelegate.isCurrent ? Theme.primary : Theme.textMuted
                         font.pointSize: 12
                         font.bold: itemDelegate.isCurrent

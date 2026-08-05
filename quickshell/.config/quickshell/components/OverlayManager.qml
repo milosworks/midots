@@ -29,7 +29,7 @@ Scope {
             property bool wantsDimmer: {
                 if (Overlays.activeOverlay === "powermenu") return powerMenu.wantsDimmer || false
                 if (Overlays.activeOverlay === "wallpaper") return wallpaperSelector.wantsDimmer || false
-                if (Overlays.activeOverlay === "apprunner") return appRunner.wantsDimmer || false
+                if (Overlays.activeOverlay === "applauncher") return appLauncher.wantsDimmer || false
                 if (Overlays.activeOverlay === "clipboard") return clipboardViewer.wantsDimmer || false
                 return false
             }
@@ -149,12 +149,12 @@ Scope {
                     
                     contentWidth: {
                         if (Overlays.activeOverlay === "powermenu") return powerMenu.implicitWidth
-                        if (Overlays.activeOverlay === "apprunner") return appRunner.implicitWidth
+                        if (Overlays.activeOverlay === "applauncher") return appLauncher.implicitWidth
                         return 0
                     }
                     contentHeight: {
                         if (Overlays.activeOverlay === "powermenu") return powerMenu.implicitHeight
-                        if (Overlays.activeOverlay === "apprunner") return appRunner.implicitHeight
+                        if (Overlays.activeOverlay === "applauncher") return appLauncher.implicitHeight
                         return 0
                     }
 
@@ -165,10 +165,10 @@ Scope {
                         onVisibleChanged: if (visible) forceActiveFocus()
                     }
                     
-                    AppRunner {
-                        id: appRunner
+                    AppLauncher {
+                        id: appLauncher
                         anchors.fill: parent
-                        visible: rightWrapper.isActive && Overlays.activeOverlay === "apprunner"
+                        visible: rightWrapper.isActive && Overlays.activeOverlay === "applauncher"
                         onVisibleChanged: if (visible) forceActiveFocus()
                     }
                 }
