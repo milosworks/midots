@@ -96,7 +96,6 @@ Scope {
                     Behavior on width { NumberAnimation { duration: 400; easing.type: Easing.OutExpo } }
                     Behavior on height { NumberAnimation { duration: 400; easing.type: Easing.OutExpo } }
 
-                    // invisible instantly when dimensions collapse to 0
                     visible: width > 0 && height > 0
 
                     NotchPopup {

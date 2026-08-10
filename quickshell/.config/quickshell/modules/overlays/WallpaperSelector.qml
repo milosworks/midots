@@ -19,10 +19,27 @@ FocusScope {
     property bool isSaved: false
 
     property var allFiles: []
+    property string searchText: ""
 
-    property int safeCount: 0
+    readonly property var filteredFiles: {
+        const files = root.allFiles
+        const query = root.searchText
+        if (!query) return files
 
-    ListModel { id: wallpaperModel }
+        const filtered = []
+        for (let i = 0; i < files.length; i++) {
+            const name = files[i].split('/').pop().replace(/\.[^/.]+$/, "").toLowerCase()
+            if (name.includes(query)) filtered.push(files[i])
+        }
+        return filtered
+    }
+
+    readonly property int safeCount: root.filteredFiles.length
+
+    ScriptModel {
+        id: wallpaperModel
+        values: root.filteredFiles
+    }
 
     Process {
         id: fetchWallpapers
@@ -89,8 +106,8 @@ FocusScope {
     }
 
     function saveCurrentWallpaper() {
-        if (carousel.currentIndex >= 0 && carousel.currentIndex < wallpaperModel.count) {
-            let currentPath = wallpaperModel.get(carousel.currentIndex).path
+        if (carousel.currentIndex >= 0 && carousel.currentIndex < root.filteredFiles.length) {
+            let currentPath = root.filteredFiles[carousel.currentIndex]
             applyWallpaper(currentPath)
             Overlays.toggleOverlay("wallpaper", "bottom", Overlays.targetScreen)
         }
@@ -114,31 +131,19 @@ FocusScope {
 
     function updateSearch(query) {
         if (!root.isActive) return;
-        let text = (query || "").toLowerCase()
-        wallpaperModel.clear()
+        root.searchText = (query || "").toLowerCase()
 
+        const files = root.filteredFiles
         let targetIndex = 0
-        let currentIndex = 0
-        let newItems = []
-        for (let i = 0; i < root.allFiles.length; i++) {
-            let f = root.allFiles[i]
-            let filename = f.split('/').pop().replace(/\.[^/.]+$/, "").toLowerCase()
-            if (!text || filename.includes(text)) {
-                newItems.push({ path: f })
-                if (ShellState.wallpaperPath && f === ShellState.wallpaperPath) {
-                    targetIndex = currentIndex
-                }
-                currentIndex++
+        for (let i = 0; i < files.length; i++) {
+            if (ShellState.wallpaperPath && files[i] === ShellState.wallpaperPath) {
+                targetIndex = i
+                break
             }
         }
 
-        if (newItems.length > 0) {
-            wallpaperModel.append(newItems)
-        }
-
         Qt.callLater(function() {
-            root.safeCount = wallpaperModel.count
-            if (wallpaperModel.count > 0) {
+            if (root.filteredFiles.length > 0) {
                 carousel.currentIndex = targetIndex
             }
         })
@@ -246,7 +251,8 @@ FocusScope {
                     id: itemDelegate
 
                     required property int index
-                    required property string path
+                    required property string modelData
+                    readonly property string path: modelData
                     property int distance: Math.abs(index - carousel.currentIndex)
                     property bool isCurrent: distance === 0
 

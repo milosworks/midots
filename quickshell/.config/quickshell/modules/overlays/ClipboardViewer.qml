@@ -166,7 +166,7 @@ FocusScope {
                         }
                     }
 
-                    Item { width: parent.width - 40 - searchInput.width - 15 - 40 - 15 - 40 - 30 } // spacer
+                    Item { width: parent.width - 40 - searchInput.width - 15 - 40 - 15 - 40 - 30 }
 
                     Rectangle {
                         width: 40; height: 40; radius: 10

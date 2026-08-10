@@ -14,12 +14,24 @@ FocusScope {
     implicitHeight: 800
 
     property string searchText: ""
-    property var allApps: DesktopEntries.applications.values
-    property var filteredApps: allApps
+    readonly property var allApps: DesktopEntries.applications.values
+
+    readonly property var filteredApps: {
+        const apps = root.allApps
+        const query = root.searchText
+        if (!query) return apps
+
+        const filtered = []
+        for (let i = 0; i < apps.length; i++) {
+            if (root.isMatch(apps[i])) filtered.push(apps[i])
+        }
+        return filtered
+    }
 
     property bool isGrid: true
 
     function isMatch(app) {
+        if (!app) return false
         if (!searchText) return true
         let nameMatches = app.name && app.name.toLowerCase().includes(searchText)
         let commentMatches = app.comment && app.comment.toLowerCase().includes(searchText)
@@ -28,18 +40,16 @@ FocusScope {
 
     function updateSearch(text) {
         searchText = text.toLowerCase()
-        let filtered = []
-        for (let i = 0; i < allApps.length; i++) {
-            if (isMatch(allApps[i])) {
-                filtered.push(allApps[i])
-            }
-        }
-        filteredApps = filtered
-        if (isGrid) {
-            gridView.currentIndex = 0
-        } else {
-            listView.currentIndex = 0
-        }
+    }
+
+    onSearchTextChanged: {
+        gridView.currentIndex = 0
+        listView.currentIndex = 0
+    }
+
+    ScriptModel {
+        id: appsModel
+        values: root.filteredApps
     }
 
     function moveUp() {
@@ -210,7 +220,7 @@ FocusScope {
                     id: listView
                     anchors.fill: parent
                     visible: !root.isGrid
-                    model: root.filteredApps
+                    model: appsModel
                     
                     preferredHighlightBegin: 40
                     preferredHighlightEnd: height - 40
@@ -301,7 +311,7 @@ FocusScope {
                     id: gridView
                     anchors.fill: parent
                     visible: root.isGrid
-                    model: root.filteredApps
+                    model: appsModel
                     
                     cellWidth: width / 3
                     cellHeight: 115

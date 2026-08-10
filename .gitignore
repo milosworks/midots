@@ -1,2 +1,54 @@
+# C++ objects and compiled artifacts
+*.slo
+*.lo
+*.o
+*.obj
+*.suo
+*.tlog
+*.ilk
+*.vspscc
+*.vssscc
+*.pdb
+
+# Qt-specific / QMake / CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeLists.txt.user
+*.pro.user
+*.pro.user.*
+*.qmake.stash
+*.qmake.cache
+Makefile*
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+qmlcache_generated/
+qmlcache_loader.cpp
 .qmlls.ini
-.vscode
+
+# Build directories
+build/
+build-*/
+debug/
+release/
+*.app/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.directory
+
+# Editor / Workspace configurations
+.idea/
+.vscode/
+.claude/
+.fleet/
+.settings/
+*.swp
+*.swo
+*~
